@@ -1,10 +1,11 @@
-const static = require('node-static')
-const file = new static.Server('./build')
-const server = require('http').createServer((req, res) => {
-    file.serve(req, res)
-})
+const app = require('express')()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 
-const io = require('socket.io')(server)
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html')
+})
 
 let rooms = {}
 let userRooms = {}
@@ -93,6 +94,6 @@ io.on('connection', socket => {
     .on('disconnect', () => disconnect(socket))
 })
 
-server.listen(3000, () => {
-    console.log("Listening on port 3000")
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`Listening on port ${process.env.PORT}`)
 })
