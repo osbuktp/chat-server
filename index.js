@@ -1,10 +1,14 @@
-const app = require('express')()
-const http = require('http').Server(app)
+const express = require('express')
 const io = require('socket.io')(http)
+const app = express()
+const path = require('path')
+const http = require('http').Server(app)
 
 
+app.use(express.static(__dirname))
+app.use(express.static(path.join(__dirname, 'build')))
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/build/index.html')
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
 let rooms = {}
@@ -94,6 +98,6 @@ io.on('connection', socket => {
     .on('disconnect', () => disconnect(socket))
 })
 
-http.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })
