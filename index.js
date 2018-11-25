@@ -94,6 +94,6 @@ io.on('connection', socket => {
     .on('disconnect', () => disconnect(socket))
 })
 
-server.listen(process.env.PORT || 3000, () => {
+http.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })
