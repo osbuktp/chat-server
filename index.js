@@ -70,7 +70,7 @@ function register(socket, name) {
     console.log(`Register: ${socket.id}:${name}`)
     users[socket.id] = name
     socket.name = name
-    socket.emit('registered', socket.id)
+    socket.emit('registered', socket.id, name)
 }
 function chatInfo(socket, room) {
     if (!rooms[room]) return
