@@ -56,11 +56,13 @@ function message(socket, room, msg) {
 }
 function joinTranslation(socket, room) {
     console.log(`${socket.id} has joined video translation in room ${room}`)
+    if (!rooms[room]) return;
     rooms[room].translation.add(socket.id)
     io.in(room).emit('user-joinedTranslation', socket.id, rooms[room].translation.size, Array.from(rooms[room].translation))
 }
 function leaveTranslation(socket, room) {
     console.log(`${socket.id} has left video translation in room ${room}`)
+    if (!rooms[room]) return;
     rooms[room].translation.delete(socket.id)
     io.in(room).emit('user-leftTranslation', socket.id)
 }
