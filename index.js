@@ -5,7 +5,7 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
 
-app.use('/', express.static(path.join(__dirname, 'build')))
+app.use('/static', express.static(path.join(__dirname, 'build')))
 
 let rooms = {}
 let userRooms = {}
