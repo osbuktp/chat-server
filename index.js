@@ -1,11 +1,13 @@
 const express = require('express')
 const path = require('path')
 const app = express()
-const server = require('http').createServer(app)
+const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-
-app.use('/static', express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, 'build')))
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 let rooms = {}
 let userRooms = {}
@@ -94,6 +96,6 @@ io.on('connection', socket => {
     .on('disconnect', () => disconnect(socket))
 })
 
-app.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT}`)
 })
