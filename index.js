@@ -4,7 +4,7 @@ const io = require('socket.io')(http)
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/dist/index.html')
+    res.sendFile(__dirname + '/build/index.html')
 })
 
 let rooms = {}
